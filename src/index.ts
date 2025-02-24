@@ -13,6 +13,8 @@
 
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
+		const body = await request.json();
+		console.log(body);
 		return new Response('Hello World!');
 	},
 } satisfies ExportedHandler<Env>;
