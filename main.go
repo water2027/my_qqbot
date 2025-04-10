@@ -7,9 +7,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/joho/godotenv"
 	"qqbot/controller"
 	"qqbot/dto"
+
+	"github.com/joho/godotenv"
 )
 
 func webPush(c *gin.Context) {
