@@ -33,13 +33,25 @@ type ValidationResponse struct {
 	Signature  string `json:"signature"`
 }
 
-func validate(c *gin.Context) {
+func webPush(c *gin.Context) {
 	var payload Payload
 	if err := c.ShouldBindJSON(&payload); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
+	switch payload.Opcode {
+	case 0:
+		// 服务器推送信息过来了
+		fmt.Println("Received type:", payload.Type)
+		fmt.Println("Received message:", payload.Data)
+	case 13:
+		// 服务器验证
+		validate(c, &payload)
+	}
+}
+
+func validate(c *gin.Context, payload *Payload) {
 	validationPayload := &ValidationRequest{}
     dataBytes, err := json.Marshal(payload.Data)
     if err != nil {
@@ -83,7 +95,6 @@ func validate(c *gin.Context) {
 		PlainToken: validationPayload.PlainToken,
 		Signature:  signature,
 	})
-
 }
 
 func main() {
@@ -92,6 +103,6 @@ func main() {
 	}
 
 	r := gin.Default()
-	r.POST("/qqbot", validate)
+	r.POST("/qqbot", webPush)
 	r.Run(":8080")
 }
