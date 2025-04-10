@@ -28,6 +28,8 @@ func NewAuthService() *AuthService {
 	}
 }
 
+var AuthHelper *AuthService = NewAuthService()
+
 func (authService *AuthService) isValid() bool {
 	return authService.Token != "" && authService.expire.Seconds() < 3 // 如果小于三秒的话，那等三秒再刷新token
 }
