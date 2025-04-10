@@ -27,10 +27,11 @@ func HandleGroupAtCreate(c *gin.Context, payload *dto.Payload) {
 	go func() {
 		groupId := data.GroupOpenId
 		msg := data.Content
-		utils.NetHelper.POST(fmt.Sprintf("https://api.sgroup.qq.com/v2/groups/%s/messages", groupId), dto.SendGroupMessage{
+		_, err := utils.NetHelper.POST(fmt.Sprintf("https://api.sgroup.qq.com/v2/groups/%s/messages", groupId), dto.SendGroupMessage{
 			Content: msg,
 			MsgType: 0,
 		}, utils.WithToken(service.AuthHelper.GetToken()))
+		fmt.Println("发送消息", err)
 	}()
 
 	c.JSON(200, gin.H{
