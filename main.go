@@ -92,6 +92,6 @@ func main() {
 	}
 
 	r := gin.Default()
-	r.POST("/exam", validate)
+	r.POST("/", validate)
 	r.Run(":8080")
 }
