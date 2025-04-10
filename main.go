@@ -87,7 +87,9 @@ func validate(c *gin.Context) {
 }
 
 func main() {
-	godotenv.Load()
+	if os.Getenv("GO_ENV") != "PRODUCTION" {
+		godotenv.Load()
+	}
 
 	r := gin.Default()
 	r.POST("/exam", validate)

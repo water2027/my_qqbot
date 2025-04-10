@@ -13,6 +13,7 @@ services:
       redis:
         condition: service_started
     environment:
+      GO_ENV: PRODUCTION
       APP_SECRET: ${APP_SECRET}
       APP_ID: ${APP_ID}
       APP_KEY: ${APP_KEY}
