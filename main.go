@@ -92,6 +92,6 @@ func main() {
 	}
 
 	r := gin.Default()
-	r.POST("/", validate)
+	r.POST("/qqbot", validate)
 	r.Run(":8080")
 }
