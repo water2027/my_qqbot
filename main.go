@@ -27,16 +27,7 @@ func webPush(c *gin.Context) {
 		fmt.Println("Received message:", payload.Data)
 		switch payload.Type {
 		case "GROUP_AT_MESSAGE_CREATE":
-			var groupMsg dto.GroupAtMessage
-			data, err := json.Marshal(payload.Data)
-			if err != nil {
-				c.JSON(400, gin.H{"error": "Failed to marshal data"})
-				return
-			}
-			if err := json.Unmarshal(data, &groupMsg); err != nil {
-				c.JSON(400, gin.H{"error": "Failed to parse GROUP_AT_MESSAGE_CREATE"})
-				return
-			}
+			controller.HandleGroupAtCreate(c, &payload)
 
 		case "AT_MESSAGE_CREATE":
 			var atMsg dto.AtMessage
