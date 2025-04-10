@@ -11,5 +11,5 @@ services:
       GO_ENV: PRODUCTION
       APP_SECRET: ${APP_SECRET}
       APP_ID: ${APP_ID}
-      APP_KEY: ${APP_KEY}
+      APP_TOKEN: ${APP_TOKEN}
 volumes:
