@@ -2,6 +2,7 @@ package service
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"os"
 	"qqbot/dto"
@@ -40,6 +41,7 @@ func (authService *AuthService) GetToken() string {
 	}
 	err := authService.refreshToken()
 	if err != nil {
+		fmt.Println(err.Error())
 		time.Sleep(5 * time.Second)
 		return authService.GetToken()
 	}
@@ -58,6 +60,8 @@ func (authService *AuthService) refreshToken() error {
 		return err
 	}
 
+	fmt.Println(string(data))
+
 	var result dto.AuthResponse
 	err = json.Unmarshal(data, &result)
 	if err != nil {
@@ -66,6 +70,7 @@ func (authService *AuthService) refreshToken() error {
 	authService.Token = result.AccessToken
 	exp, err := strconv.ParseUint(result.ExpiresIn, 10, 64)
 	if err != nil {
+		fmt.Println(result.ExpiresIn)
 		return err
 	}
 
@@ -74,6 +79,9 @@ func (authService *AuthService) refreshToken() error {
 	return nil
 }
 
-func init() {
+func Init() {
 	AuthHelper = NewAuthService()
+	// 先获取一次token，避免第一次请求的时候需要等待
+	_ = AuthHelper.refreshToken()
+	fmt.Println("初始化完成")
 }

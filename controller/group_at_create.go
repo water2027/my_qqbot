@@ -25,12 +25,15 @@ func HandleGroupAtCreate(c *gin.Context, payload *dto.Payload) {
 	}
 
 	go func() {
+		fmt.Println("收到群@消息", data.GroupOpenId, data.Content)
 		groupId := data.GroupOpenId
 		msg := data.Content
+		token := service.AuthHelper.GetToken()
+		fmt.Println("获取token: ", token)
 		_, err := utils.NetHelper.POST(fmt.Sprintf("https://api.sgroup.qq.com/v2/groups/%s/messages", groupId), dto.SendGroupMessage{
 			Content: msg,
 			MsgType: 0,
-		}, utils.WithToken(service.AuthHelper.GetToken()))
+		}, utils.WithToken(token))
 		fmt.Println("发送消息", err)
 	}()
 
