@@ -44,7 +44,7 @@ func getRandomImage(msg *message.Message) error {
 		msg.SetContent("获取随机图片失败，回复为false")
 		return nil
 	}
-	media := message.NewMediaObject(message.ImageFile, randomImageResponse.Url, msg.GetRouteId())
+	media := message.NewMediaObject(message.ImageFile, randomImageResponse.Url, msg.GetRouteId(), 0, 5)
 	if media == nil {
 		msg.SetContent("获取随机图片失败，上传图片失败")
 		return nil

@@ -23,7 +23,7 @@ const (
 	AudioFile
 )
 
-func NewMediaObject(fileType FileType, url, groupId string) *MediaObject {
+func NewMediaObject(fileType FileType, url, groupId string, retryTimes, maxTimes uint) *MediaObject {
 	token := auth.AuthHelper.GetToken()
 	resp, err := utils.NetHelper.POST(fmt.Sprintf("https://api.sgroup.qq.com/v2/groups/%s/files", groupId), map[string]interface{}{
 		"file_type": fileType,
@@ -47,7 +47,12 @@ func NewMediaObject(fileType FileType, url, groupId string) *MediaObject {
 	}
 	if mediaObject.FileUUID == "" || mediaObject.FileInfo == "" {
 		fmt.Println("上传文件失败", string(bytesData))
-		return nil
+		if retryTimes >= maxTimes {
+			return nil
+		} else {
+			retryTimes++
+			return NewMediaObject(fileType, url, groupId, retryTimes, maxTimes)
+		}
 	}
 	return &mediaObject
 
