@@ -41,6 +41,7 @@ func NewMessage(msgId, routeId string, routeType MessageRouteType, content strin
 		routeId:    routeId,
 		routeType:  routeType,
 		rawContent: content,
+		hasSet:     false,
 	}
 }
 
@@ -94,5 +95,5 @@ func (m *Message) GetRouteId() string {
 }
 
 func (m *Message) CanBeSet() bool {
-	return m.hasSet
+	return !m.hasSet
 }
