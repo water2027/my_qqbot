@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"qqbot/dto"
-	"qqbot/service"
+	"qqbot/service/message"
 )
 
 func HandleGroupAtCreate(c *gin.Context, payload *dto.Payload) {
@@ -26,7 +26,7 @@ func HandleGroupAtCreate(c *gin.Context, payload *dto.Payload) {
 	}
 
 	go func() {
-		service.MS.ReceiveMessage(*service.NewMessage(msg.Id, msg.GroupOpenId, service.Group, msg.Content))
+		message.MS.ReceiveMessage(*message.NewMessage(msg.Id, msg.GroupOpenId, message.Group, msg.Content))
 	}()
 
 	c.JSON(200, gin.H{

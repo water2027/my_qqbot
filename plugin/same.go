@@ -2,13 +2,13 @@ package plugin
 
 import (
 	"fmt"
-	"qqbot/service"
+	"qqbot/service/message"
 )
 
 func init() {
-	service.MS.RegisterBeforeSendHook(service.BeforeSendHook{
+	message.MS.RegisterBeforeSendHook(message.BeforeSendHook{
 		Priority: 255,
-		Fn: func(msg *service.Message) error {
+		Fn: func(msg *message.Message) error {
 			success := msg.SetContent(fmt.Sprintf("[%s] %s", "HELLO", msg.GetRawContent()))
 			if !success {
 				return fmt.Errorf("设置消息内容失败")

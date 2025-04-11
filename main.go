@@ -2,15 +2,14 @@ package main
 
 import (
 	"fmt"
-	"os"
 	
 	"github.com/gin-gonic/gin"
 
 	"qqbot/controller"
 	"qqbot/dto"
+	_ "qqbot/init"
 	_ "qqbot/service"
-
-	"github.com/joho/godotenv"
+	_ "qqbot/plugin"
 )
 
 func webPush(c *gin.Context) {
@@ -38,10 +37,6 @@ func webPush(c *gin.Context) {
 }
 
 func main() {
-	if os.Getenv("GO_ENV") != "PRODUCTION" {
-		godotenv.Load()
-	}
-
 	r := gin.Default()
 	r.POST("/qqbot", webPush)
 	r.Run(":8080")
