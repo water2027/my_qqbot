@@ -12,3 +12,5 @@ services:
       APP_SECRET: ${APP_SECRET}
       APP_ID: ${APP_ID}
       APP_TOKEN: ${APP_TOKEN}
+      AI_API_KEY: ${AI_API_KEY}
+      AI_API_URL: ${AI_API_URL}
