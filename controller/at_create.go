@@ -29,11 +29,12 @@ func HandleAtCreate(c *gin.Context, payload *dto.Payload) {
 
 	go func() {
 		fmt.Println("收到频道@消息", data.Id, data.Content)
+		channelId := data.ChannelId
 		msgId := data.Id
 		msg := data.Content
 		token := service.AuthHelper.GetToken()
 		fmt.Println("获取token: ", token)
-		resp, err := utils.NetHelper.POST(fmt.Sprintf("https://api.sgroup.qq.com/channels/%s/messages", msgId), dto.SendChannelMessage{
+		resp, err := utils.NetHelper.POST(fmt.Sprintf("https://api.sgroup.qq.com/channels/%s/messages", channelId), dto.SendChannelMessage{
 			Content: msg,
 			MsgId:   msgId,
 		}, utils.WithToken(token))
