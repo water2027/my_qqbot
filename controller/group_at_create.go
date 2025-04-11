@@ -14,11 +14,13 @@ func HandleGroupAtCreate(c *gin.Context, payload *dto.Payload) {
 	msg := dto.GroupAtMessage{}
 	payloadBytes, err := json.Marshal(payload.Data)
 	if err != nil {
+		fmt.Println("解析请求体失败:", err)
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
 	if err := json.Unmarshal(payloadBytes, &msg); err != nil {
+		fmt.Println("解析请求体失败:", err)
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}

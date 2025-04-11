@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"os"
 	
-	"io"
-
 	"github.com/gin-gonic/gin"
 
 	"qqbot/controller"
@@ -16,13 +14,9 @@ import (
 )
 
 func webPush(c *gin.Context) {
-	bytesData, err := io.ReadAll(c.Request.Body)
-	if err != nil {
-		fmt.Println("读取请求体失败", err)
-	}
-	fmt.Println("请求体", string(bytesData))
 	var payload dto.Payload
 	if err := c.ShouldBindJSON(&payload); err != nil {
+		fmt.Println("解析请求体失败:", err)
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
