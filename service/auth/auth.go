@@ -45,7 +45,7 @@ func (authService *AuthService) GetToken() string {
 		time.Sleep(5 * time.Second)
 		return authService.GetToken()
 	}
-	return authService.Token
+	return fmt.Sprintf("QQBot %s", authService.Token)
 }
 
 func (authService *AuthService) refreshToken() error {

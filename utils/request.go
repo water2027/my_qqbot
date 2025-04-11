@@ -14,7 +14,7 @@ type RequestOption func(*http.Request)
 // WithToken adds an authorization token to the request
 func WithToken(token string) RequestOption {
 	return func(req *http.Request) {
-		req.Header.Set("Authorization", "QQBot "+token)
+		req.Header.Set("Authorization", token)
 	}
 }
 

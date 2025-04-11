@@ -1,9 +1,10 @@
 package ai
 
 import (
+	"encoding/json"
+	"fmt"
 	"io"
 	"os"
-	"encoding/json"
 	"qqbot/service/message"
 	"qqbot/utils"
 )
@@ -41,6 +42,10 @@ func getAiResponse(msg *message.Message) error {
 
 	apiUrl := os.Getenv("AI_API_URL")
 	apiKey := os.Getenv("AI_API_KEY")
+	token := fmt.Sprintf("Bearer %s", apiKey)
+	fmt.Println("AI API URL:", apiUrl)
+	fmt.Println("AI API Key:", apiKey)
+	fmt.Println("APP Token:", token)
 	if apiUrl == "" || apiKey == "" {
 		msg.SetContent("AI API URL or API Key is not set")
 		return nil
@@ -53,7 +58,7 @@ func getAiResponse(msg *message.Message) error {
 				"content": msg.GetRawContent(),
 			},
 		},
-	}, utils.WithToken(apiKey))
+	}, utils.WithToken(token))
 	if err != nil {
 		msg.SetContent("AI API request failed: " + err.Error())
 		return nil
@@ -64,6 +69,7 @@ func getAiResponse(msg *message.Message) error {
 		msg.SetContent("AI API response read failed: " + err.Error())
 		return nil
 	}
+	fmt.Println("AI API response:", string(bytesData))
 
 	var glmResponse GLMResponse
 	err = json.Unmarshal(bytesData, &glmResponse)
