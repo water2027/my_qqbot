@@ -16,11 +16,13 @@ func HandleAtCreate(c *gin.Context, payload *dto.Payload) {
 	data := dto.AtMessage{}
 	payloadBytes, err := json.Marshal(payload.Data)
 	if err != nil {
+		fmt.Println("json.Marshal error", err)
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
 	if err := json.Unmarshal(payloadBytes, &data); err != nil {
+		fmt.Println("json.Marshal error", err)
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}

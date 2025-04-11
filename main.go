@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 
@@ -29,10 +28,8 @@ func webPush(c *gin.Context) {
 		switch payload.Type {
 		case "GROUP_AT_MESSAGE_CREATE":
 			controller.HandleGroupAtCreate(c, &payload)
-		default:
-			if strings.Contains(payload.Type, "AT_MESSAGE_CREATE") {
-				controller.HandleAtCreate(c, &payload)
-			}
+		case "AT_MESSAGE_CREATE":
+			controller.HandleAtCreate(c, &payload)
 		}
 	case 13:
 		// 服务器验证
