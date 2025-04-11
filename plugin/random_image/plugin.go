@@ -19,7 +19,7 @@ func getRandomImage(msg *message.Message) error {
 	if !msg.CanBeSet() {
 		return nil
 	}
-	if !strings.HasPrefix(msg.GetRawContent(), "/随机图片") {
+	if !strings.HasPrefix(msg.GetRawContent(), " /随机图片") { // 注意前面有一个空格！
 		return nil
 	}
 	resp, err := utils.NetHelper.GET("https://api.vvhan.com/api/wallpaper/acg?type=json")
