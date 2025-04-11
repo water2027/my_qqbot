@@ -30,19 +30,16 @@ func webPush(c *gin.Context) {
 	switch payload.Opcode {
 	case 0:
 		// 服务器推送信息过来了
-		fmt.Println("Received type:", payload.Type)
-		fmt.Println("Received message:", payload.Data)
 		switch payload.Type {
 		case "GROUP_AT_MESSAGE_CREATE":
 			controller.HandleGroupAtCreate(c, &payload)
-		case "AT_MESSAGE_CREATE":
-			controller.HandleAtCreate(c, &payload)
+		default:
+			fmt.Println("未知消息类型", payload.Type)
 		}
 	case 13:
 		// 服务器验证
 		controller.Validate(c, &payload)
 	}
-
 
 }
 
