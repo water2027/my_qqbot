@@ -74,12 +74,13 @@ func (m *Message) SetContent(content string) bool {
 	return true
 }
 
-func (m *Message) SetMedia(media *MediaObject) bool {
+func (m *Message) SetMedia(media *MediaObject, content string) bool {
 	if m.hasSet {
 		return false
 	}
 	m.msgType = MediaMessage
 	m.media = media
+	m.content = content
 	m.hasSet = true
 	return true
 }

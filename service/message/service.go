@@ -27,7 +27,7 @@ func (ms *MessageService) sendMessage(msg Message) {
 	switch msg.routeType {
 	case Group:
 		token := auth.AuthHelper.GetToken()
-		fmt.Println("发送消息", msg.routeId, msg.content, msg.msgType)
+		fmt.Println("发送消息", msg.routeId, msg.content, msg.msgType, msg.msgId)
 		resp, err := utils.NetHelper.POST(fmt.Sprintf("https://api.sgroup.qq.com/v2/groups/%s/messages", msg.routeId), msg.ToStruct(), utils.WithToken(token))
 		if err != nil {
 			fmt.Println("发送消息失败", err)

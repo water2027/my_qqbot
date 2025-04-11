@@ -45,6 +45,10 @@ func NewMediaObject(fileType FileType, url, groupId string) *MediaObject {
 		fmt.Println("解析json失败", err)
 		return nil
 	}
+	if mediaObject.FileUUID == "" || mediaObject.FileInfo == "" {
+		fmt.Println("上传文件失败", string(bytesData))
+		return nil
+	}
 	return &mediaObject
 
 }
@@ -53,6 +57,5 @@ func (m *MediaObject) ToStruct() interface{} {
 	return map[string]interface{}{
 		"file_uuid": m.FileUUID,
 		"file_info": m.FileInfo,
-		"ttl":       m.TTL,
 	}
 }

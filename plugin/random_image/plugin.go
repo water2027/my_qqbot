@@ -49,7 +49,7 @@ func getRandomImage(msg *message.Message) error {
 		msg.SetContent("获取随机图片失败，上传图片失败")
 		return nil
 	}
-	msg.SetMedia(media)
+	msg.SetMedia(media, "随机图片")
 	return nil
 }
 
