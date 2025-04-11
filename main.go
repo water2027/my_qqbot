@@ -33,6 +33,7 @@ func webPush(c *gin.Context) {
 			if strings.Contains(payload.Type, "AT_MESSAGE_CREATE") {
 				controller.HandleAtCreate(c, &payload)
 			}
+		}
 	case 13:
 		// 服务器验证
 		controller.Validate(c, &payload)
