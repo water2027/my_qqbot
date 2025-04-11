@@ -42,6 +42,7 @@ func getAiResponse(msg *message.Message) error {
 
 	apiUrl := os.Getenv("AI_API_URL")
 	apiKey := os.Getenv("AI_API_KEY")
+	model := os.Getenv("AI_MODEL")
 	token := fmt.Sprintf("Bearer %s", apiKey)
 	fmt.Println("AI API URL:", apiUrl)
 	fmt.Println("AI API Key:", apiKey)
@@ -51,7 +52,7 @@ func getAiResponse(msg *message.Message) error {
 		return nil
 	}
 	resp, err := utils.NetHelper.POST(apiUrl, map[string]interface{}{
-		"model": "glm-4-flash",
+		"model": model,
 		"messages": []map[string]interface{}{
 			{
 				"role":    "user",
