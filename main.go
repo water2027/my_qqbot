@@ -10,7 +10,7 @@ import (
 
 	"qqbot/controller"
 	"qqbot/dto"
-	"qqbot/service"
+	_ "qqbot/service"
 
 	"github.com/joho/godotenv"
 )
@@ -50,6 +50,5 @@ func main() {
 
 	r := gin.Default()
 	r.POST("/qqbot", webPush)
-	service.Init()
 	r.Run(":8080")
 }

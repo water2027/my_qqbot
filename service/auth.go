@@ -79,7 +79,7 @@ func (authService *AuthService) refreshToken() error {
 	return nil
 }
 
-func Init() {
+func init() {
 	AuthHelper = NewAuthService()
 	// 先获取一次token，避免第一次请求的时候需要等待
 	_ = AuthHelper.refreshToken()

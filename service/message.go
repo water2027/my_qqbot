@@ -40,13 +40,14 @@ const (
 )
 
 type Message struct {
-	msgId     string
-	content   string
-	msgType   MessageType
-	media     *MediaObject
-	routeType MessageRouteType // 通过哪一个渠道发送的
-	routeId   string           // id
-	hasSet    bool             // 是否设置过
+	msgId      string
+	content    string
+	rawContent string
+	msgType    MessageType
+	media      *MediaObject
+	routeType  MessageRouteType // 通过哪一个渠道发送的
+	routeId    string           // id
+	hasSet     bool             // 是否设置过
 }
 
 func (m *Message) ToStruct() interface{} {
@@ -89,6 +90,10 @@ func (m *Message) SetMedia(media *MediaObject) bool {
 	return true
 }
 
+func (m *Message) GetRawContent() string {
+	return m.rawContent
+}
+
 type MediaObject struct {
 	FileUUID string `json:"file_uuid"`
 	FileInfo string `json:"file_info"`
@@ -103,11 +108,12 @@ func (m *MediaObject) ToStruct() interface{} {
 	}
 }
 
-func NewMessage(msgId, routeId string, routeType MessageRouteType) *Message {
+func NewMessage(msgId, routeId string, routeType MessageRouteType, content string) *Message {
 	return &Message{
 		msgId:     msgId,
 		routeId:   routeId,
 		routeType: routeType,
+		rawContent: content,
 	}
 }
 
@@ -147,4 +153,19 @@ func (ms *MessageService) Run() error {
 		ms.sendMessage(msg)
 	}
 	return nil
+}
+
+func (ms *MessageService) RegisterBeforeSendHook(hook BeforeSendHook) {
+	ms.beforeSend = append(ms.beforeSend, hook)
+}
+
+var MS *MessageService
+
+func init() {
+	MS = &MessageService{
+		msgChan:    make(chan Message, 100),
+		beforeSend: make([]BeforeSendHook, 0),
+	}
+	go MS.Run()
+	fmt.Println("消息服务启动成功")
 }
