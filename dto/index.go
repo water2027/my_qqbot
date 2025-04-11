@@ -12,7 +12,7 @@ type Author struct {
 type Member struct {
 	JoinedAt string `json:"joined_at"`
 	Nick     string `json:"nick"`
-	Roles    []int  `json:"roles"`
+	// Roles    []int  `json:"roles"`
 }
 
 type Payload struct {
