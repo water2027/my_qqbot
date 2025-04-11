@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 
@@ -31,18 +30,7 @@ func webPush(c *gin.Context) {
 			controller.HandleGroupAtCreate(c, &payload)
 
 		case "AT_MESSAGE_CREATE":
-			var atMsg dto.AtMessage
-			data, err := json.Marshal(payload.Data)
-			if err != nil {
-				fmt.Println("Failed to marshal data:", err)
-				c.JSON(400, gin.H{"error": "Failed to marshal data"})
-				return
-			}
-			if err := json.Unmarshal(data, &atMsg); err != nil {
-				fmt.Println("Failed to unmarshal data:", err)
-				c.JSON(400, gin.H{"error": "Failed to parse AT_MESSAGE_CREATE"})
-				return
-			}
+			controller.HandleAtCreate(c, &payload)
 		}
 	case 13:
 		// 服务器验证
