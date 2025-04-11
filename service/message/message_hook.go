@@ -4,5 +4,5 @@ type BeforeSendFunc func(msg *Message) error
 
 type BeforeSendHook struct {
 	Fn       BeforeSendFunc
-	Priority int
+	Priority uint
 }

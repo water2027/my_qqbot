@@ -88,16 +88,10 @@ func (m *Message) GetRawContent() string {
 	return m.rawContent
 }
 
-type MediaObject struct {
-	FileUUID string `json:"file_uuid"`
-	FileInfo string `json:"file_info"`
-	TTL      int    `json:"ttl"`
+func (m *Message) GetRouteId() string {
+	return m.routeId
 }
 
-func (m *MediaObject) ToStruct() interface{} {
-	return map[string]interface{}{
-		"file_uuid": m.FileUUID,
-		"file_info": m.FileInfo,
-		"ttl":       m.TTL,
-	}
+func (m *Message) CanBeSet() bool {
+	return m.hasSet
 }
