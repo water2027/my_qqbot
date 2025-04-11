@@ -109,6 +109,7 @@ func (m *MediaObject) ToStruct() interface{} {
 }
 
 func NewMessage(msgId, routeId string, routeType MessageRouteType, content string) *Message {
+	fmt.Println("创建消息", msgId, routeId, routeType, content)
 	return &Message{
 		msgId:     msgId,
 		routeId:   routeId,

@@ -26,7 +26,6 @@ func HandleGroupAtCreate(c *gin.Context, payload *dto.Payload) {
 	}
 
 	go func() {
-		fmt.Println("收到群@消息", msg.GroupOpenId, msg.Content)
 		service.MS.ReceiveMessage(*service.NewMessage(msg.Id, msg.GroupOpenId, service.Group, msg.Content))
 	}()
 
