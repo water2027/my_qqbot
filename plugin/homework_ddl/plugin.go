@@ -2,7 +2,6 @@ package homeworkddl
 
 import (
 	"fmt"
-	"io"
 	"os"
 	"qqbot/service/message"
 	"qqbot/utils"
@@ -59,13 +58,7 @@ func getHomeworkDDL(msg *message.Message) error {
 		return nil
 	}
 
-	defer resp.Body.Close()
-	bytesData, err := io.ReadAll(resp.Body)
-	if err != nil {
-		msg.SetContent("设置失败！网络错误")
-		return nil
-	}
-	if string(bytesData) != "success" {
+	if resp.StatusCode != 200 {
 		msg.SetContent("设置失败！")
 		return nil
 	}
