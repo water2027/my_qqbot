@@ -15,3 +15,4 @@ services:
       AI_API_KEY: ${AI_API_KEY}
       AI_API_URL: ${AI_API_URL}
       AI_MODEL: ${AI_MODEL}
+      WEBHOOK: ${WEBHOOK}
