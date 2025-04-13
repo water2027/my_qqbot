@@ -1,7 +1,6 @@
 package homeworkddl
 
 import (
-	"fmt"
 	"io"
 	"os"
 	"qqbot/service/message"
@@ -77,15 +76,6 @@ func getHomeworkDDL(msg *message.Message) error {
 func init() {
 	message.MS.RegisterBeforeSendHook(message.BeforeSendHook{
 		Priority: 200,
-		Fn: func(msg *message.Message) error {
-			if !msg.CanBeSet() {
-				return nil
-			}
-			success := msg.SetContent(fmt.Sprintf("[%s] %s", "HELLO", msg.GetRawContent()))
-			if !success {
-				return fmt.Errorf("设置消息内容失败")
-			}
-			return nil
-		},
+		Fn: getHomeworkDDL,
 	})
 }
