@@ -5,6 +5,7 @@ import (
 	"os"
 	"qqbot/service/message"
 	"qqbot/utils"
+	"strconv"
 	"strings"
 )
 
@@ -37,10 +38,10 @@ func getHomeworkDDL(msg *message.Message) error {
 		return nil
 	}
 
-	year := times[0]
-	month := times[1]
-	day := times[2]
-	hour := times[3]
+	year, _ := strconv.Atoi(times[0])
+	month, _ := strconv.Atoi(times[1])
+	day, _ := strconv.Atoi(times[2])
+	hour, _ := strconv.Atoi(times[3])
 	
 	webhook := os.Getenv("WEBHOOK")
 	resp, err := utils.NetHelper.POST(webhook, map[string]interface{}{
