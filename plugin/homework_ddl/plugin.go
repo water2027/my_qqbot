@@ -1,6 +1,7 @@
 package homeworkddl
 
 import (
+	"fmt"
 	"io"
 	"os"
 	"qqbot/service/message"
@@ -10,11 +11,12 @@ import (
 )
 
 func getHomeworkDDL(msg *message.Message) error {
+	fmt.Println("getHomeworkDDL")
 	if !msg.CanBeSet() {
 		return nil
 	}
 	rawContent := msg.GetRawContent()
-	cmd, found := strings.CutPrefix(rawContent, " /作业")
+	cmd, found := strings.CutPrefix(rawContent, " /作业 ")
 	if !found {
 		return nil
 	}
