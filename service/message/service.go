@@ -1,8 +1,10 @@
 package message
 
 import (
+	"context"
 	"fmt"
 	"io"
+	"time"
 
 	"qqbot/service/auth"
 	"qqbot/utils"
@@ -18,9 +20,28 @@ func (ms *MessageService) ReceiveMessage(msg Message) {
 }
 
 func (ms *MessageService) sendMessage(msg Message) {
-	for _, hook := range ms.beforeSend {
-		if err := hook.Fn(&msg); err != nil {
-			fmt.Println("发送消息前处理失败", err)
+	// 4分钟+30秒的超时，如果超过这个时间还没有发送完，就直接返回
+	ctx, cancel := context.WithTimeout(context.Background(), 4*time.Minute+30*time.Second)
+	defer cancel()
+	errChan := make(chan error, 1)
+	go func() {
+		for _, hook := range ms.beforeSend {
+			if err := hook.Fn(&msg); err != nil {
+				errChan <- err
+				return
+			}
+		}
+	}()
+	select {
+	case <-ctx.Done():
+		// 如果设置过了，那就继续发送
+		// 没有就设置超时
+		if !msg.hasSet {
+			msg.SetContent("消息准备超时")
+		}
+	case err := <-errChan:
+		if err != nil {
+			fmt.Println("消息发送失败", err, msg.routeId, msg.content, msg.msgType, msg.msgId)
 			return
 		}
 	}
