@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/gin-gonic/gin"
 
@@ -39,9 +38,6 @@ func webPush(c *gin.Context) {
 
 func main() {
 	r := gin.Default()
-	if os.Getenv("GO_ENV") != "" {
-		gin.SetMode(gin.ReleaseMode)
-	}
 	r.POST("/qqbot", webPush)
 	r.Run(":8080")
 }

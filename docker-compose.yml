@@ -9,6 +9,7 @@ services:
       - "8081:8080"
     environment:
       GO_ENV: PRODUCTION
+      GIN_MODE: release
       APP_SECRET: ${APP_SECRET}
       APP_ID: ${APP_ID}
       APP_TOKEN: ${APP_TOKEN}
