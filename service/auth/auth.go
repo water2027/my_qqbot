@@ -60,11 +60,10 @@ func (authService *AuthService) refreshToken() error {
 		return err
 	}
 
-	fmt.Println(string(data))
-
 	var result dto.AuthResponse
 	err = json.Unmarshal(data, &result)
 	if err != nil {
+		fmt.Println(string(data))
 		return err
 	}
 	authService.Token = result.AccessToken
