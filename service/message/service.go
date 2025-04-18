@@ -31,6 +31,7 @@ func (ms *MessageService) sendMessage(msg Message) {
 				return
 			}
 		}
+		errChan <- nil
 	}()
 	select {
 	case <-ctx.Done():
